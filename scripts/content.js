@@ -1,7 +1,6 @@
 class Observer {
     // According to UI updates these classes might be changed by otvet.mail.ru
     #classes = {
-        mainCentralContainer: ".gIgDu",
         questionsContainer: ".Ukx7k",
         answersContainer: [".RIsA6", ".qIJY9"], // (first one is main to questions where the best answer was already selected or question is already on voting)
         commentsContainer: ".hVFZ2",
@@ -17,7 +16,7 @@ class Observer {
         this._ignoreList = JSON.parse(localStorage.getItem("ignoreList")) || [];
     }
 
-    #body = document.querySelector(this.#classes.mainCentralContainer);
+    #body = document.querySelector("body");
     #currentUserLink = document.querySelector("a.nbO8x[title*='Профиль']")
         ?.href;
 
@@ -105,6 +104,8 @@ class Observer {
 
     #appendIgnoreLinkElem(node) {
         let linkElem = this.#getUserLinkElem(node);
+        if (!linkElem) return;
+
         console.log(
             `BlackList Addon v 1.0: currentUserLink: ${this.#currentUserLink}`
         );
@@ -147,8 +148,11 @@ class Observer {
     }
 
     #filterContainedElements(containedElements) {
+        if (!this._ignoreList.length) return;
+
         containedElements.forEach(element => {
-            let containerUserLink = this.#getUserLinkElem(element).href;
+            let containerUserLink = this.#getUserLinkElem(element)?.href;
+            if (!containerUserLink) return;
 
             if (this._ignoreList.some(user => user.url === containerUserLink)) {
                 element.remove();
