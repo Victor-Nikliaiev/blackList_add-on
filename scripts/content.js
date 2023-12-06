@@ -132,7 +132,6 @@ class Observer {
         ignoreLink.style.fontSize = "10px";
         ignoreLink.style.whiteSpace = "nowrap";
         ignoreLink.style.overflow = "visible";
-        ignoreLink.style.zIndex = 1000;
 
         ignoreLink.style.top = params.bottom + params.height + 20;
 
